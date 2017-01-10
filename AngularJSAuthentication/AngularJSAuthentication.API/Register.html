@@ -1,0 +1,222 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+    <meta charset="utf-8" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            padding-top: 70px;
+            /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+        }
+    </style>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="scripts/jquery-2.0.3.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="scripts/jquery-serialization.js"></script>
+    <script src="scripts/jquery-tmpl.js"></script>
+    <script>
+        $(function () {
+            $("#loginDialog").dialog({
+                autoOpen: false
+            });
+        });
+    </script>
+
+</head>
+
+
+
+<body>
+
+    <header>
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">
+                        <img src="assets/images/logo.png" alt="logo">
+                    </a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="Index.html">Home</a>
+                        </li>
+                        <li>
+                            <a myAccountLink class=hidden href="/UserDashboard.html">My Account</a>
+                        </li>
+                        <li>
+                            <a logoutLink class=hidden href="#">Log out</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container -->
+        </nav>
+    </header>
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="login-wrapper">
+                    <div class="box">
+                        <div class="content-wrap">
+                            <h4>Sign Up</h4>
+                            <form id="register">
+                                <input class="form-control" name="username" placeholder="username" /><br />
+                                <input class="form-control" type="password" name="password" placeholder="password" /><br />
+                                <input class="form-control" type="password" name="confirmPassword" placeholder="confirm password" /><br />
+                                <p hidden class="loader">Loading...</p>
+                                <button class="btn btn-primary signup" register>register</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="loginDialog" title="Log in">
+        <form id="login">
+            <input type="username" name="username" placeholder="username" />
+            <input type="password" name="password" placeholder="password" />
+            <button type="login">login</button>
+        </form>
+    </div>
+    <footer>
+        <div class="panel-footer">
+            <div class="container text-center">
+                <hr>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-md-4">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="#">Home</a></li>
+                                <li><a href="#">FAQ</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="#">Contact</a></li>
+                                <li><a href="#">Opening hours</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="#">About the Library</a></li>
+                                <li><a href="#">Libraries</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-md-9">
+                            <!-- social login buttons-->
+                            <!-- twitter button -->
+                            <iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" class="twitter-share-button twitter-share-button-rendered twitter-tweet-button" title="Twitter Tweet Button" src="http://platform.twitter.com/widgets/tweet_button.f7908d4abf5ce27173c69bdbb93aedb6.en.html#dnt=false&amp;id=twitter-widget-0&amp;lang=en&amp;original_referer=http%3A%2F%2Flocalhost%3A53294%2Findex.html&amp;size=m&amp;text=Digital%20Library&amp;time=1480611185154&amp;type=share&amp;url=http%3A%2F%2Flocalhost%3A53294%2Findex.html" style="position: static; visibility: visible; width: 62px; height: 20px;"></iframe>
+                            <script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+                            <!---//g+1 button -->
+                            <script src="https://apis.google.com/js/platform.js" async="" defer="" gapi_processed="true">
+                            </script>
+                            <div id="___plusone_0" style="text-indent: 0px; margin: 0px; padding: 0px; background: transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 106px; height: 24px;"><iframe frameborder="0" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="position: static; top: 0px; width: 106px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 24px;" tabindex="0" vspace="0" width="100%" id="I0_1480611185125" name="I0_1480611185125" src="https://apis.google.com/u/0/se/0/_/+1/fastbutton?usegapi=1&amp;origin=http%3A%2F%2Flocalhost%3A53294&amp;url=http%3A%2F%2Flocalhost%3A53294%2Findex.html&amp;gsrc=3p&amp;ic=1&amp;jsh=m%3B%2F_%2Fscs%2Fapps-static%2F_%2Fjs%2Fk%3Doz.gapi.en.Fpvy79A2_Ho.O%2Fm%3D__features__%2Fam%3DAQ%2Frt%3Dj%2Fd%3D1%2Frs%3DAGLTcCPgQuDDg5WEE3FyJ8yHOdN_PAlcmw#_methods=onPlusOne%2C_ready%2C_close%2C_open%2C_resizeMe%2C_renderstart%2Concircled%2Cdrefresh%2Cerefresh&amp;id=I0_1480611185125&amp;parent=http%3A%2F%2Flocalhost%3A53294&amp;pfname=&amp;rpctoken=17252643" data-gapiattached="true" title="+1"></iframe></div>
+
+                            <!-- facebook like and share buttons-->
+                            <span id="fb-root" class=" fb_reset"><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div></div></div><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div><iframe name="fb_xdm_frame_http" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" id="fb_xdm_frame_http" aria-hidden="true" title="Facebook Cross Domain Communication Frame" tabindex="-1" src="http://staticxx.facebook.com/connect/xd_arbiter/r/fTmIQU3LxvB.js?version=42#channel=f1026e9c92cda58&amp;origin=http%3A%2F%2Flocalhost%3A53294" style="border: none;"></iframe><iframe name="fb_xdm_frame_https" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" id="fb_xdm_frame_https" aria-hidden="true" title="Facebook Cross Domain Communication Frame" tabindex="-1" src="https://staticxx.facebook.com/connect/xd_arbiter/r/fTmIQU3LxvB.js?version=42#channel=f1026e9c92cda58&amp;origin=http%3A%2F%2Flocalhost%3A53294" style="border: none;"></iframe></div></div></span>
+                            <script>
+                                (function (d, s, id) {
+                                    var js, fjs = d.getElementsByTagName(s)[0];
+                                    if (d.getElementById(id)) return;
+                                    js = d.createElement(s); js.id = id;
+                                    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
+                                    fjs.parentNode.insertBefore(js, fjs);
+                                }(document, 'script', 'facebook-jssdk'));</script>
+                            <div class="fb-like fb_iframe_widget" data-href="http://localhost:53294/index.html
+                                 data-layout=" standard"="" data-action="like" data-show-faces="true" data-share="true" fb-xfbml-state="rendered" fb-iframe-plugin-query="action=like&amp;app_id=&amp;container_width=825&amp;href=http%3A%2F%2Flocalhost%3A53294%2Findex.html%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520data-layout%3D&amp;locale=en_US&amp;sdk=joey&amp;share=true&amp;show_faces=true"><span style="vertical-align: bottom; width: 450px; height: 24px;"><iframe name="fe3ac445114798" width="1000px" height="1000px" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" title="fb:like Facebook Social Plugin" src="https://www.facebook.com/v2.8/plugins/like.php?action=like&amp;app_id=&amp;channel=http%3A%2F%2Fstaticxx.facebook.com%2Fconnect%2Fxd_arbiter%2Fr%2FfTmIQU3LxvB.js%3Fversion%3D42%23cb%3Df25e26c162aa374%26domain%3Dlocalhost%26origin%3Dhttp%253A%252F%252Flocalhost%253A53294%252Ff1026e9c92cda58%26relation%3Dparent.parent&amp;container_width=825&amp;href=http%3A%2F%2Flocalhost%3A53294%2Findex.html%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520data-layout%3D&amp;locale=en_US&amp;sdk=joey&amp;share=true&amp;show_faces=true" style="border: none; visibility: visible; width: 450px; height: 24px;" class=""></iframe></span></div>
+                            <!--ekei pou exei localhost na baloume to sosto url-->
+                        </div>
+                        <div class="col-md-3">
+                            <p>© 2016 - Digital Library - Team2</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        function handleGlobalAjaxError(jqXHR, textStatus, errorThrown) {
+            if (jqXHR.status == 500) {
+                alert("Your request could not be fulfilled. Please reload the page and try again. Server error message:   " + textStatus);
+                return false;
+            } else if (jqXHR.status == 401) {
+                alert("Please log in to continue.")
+                return false;
+            } else if (jqXHR.status == 403) {
+                alert("You do not have the required permissions.")
+                return false;
+            } else if (jqXHR.status == 405) {
+                alert("Invalid request. Please reload the page.")
+                return false;
+            } else {
+                alert(jqXHR.status + " " + errorThrown);
+                return false;
+            }
+        }
+
+        $("#register").on("click", "[register]", function (evt) {
+            evt.preventDefault();
+            formData = $("#register").toObject();
+            //formData.grant_type = "password";
+            promise = $.ajax({
+                type: "POST",
+                url: "api/account/register",
+                datatype: "application/json",
+                data: formData,
+                beforeSend: function () {
+                    $(".loader").show();
+                },
+                complete: function () {
+                    $(".loader").hide();
+                }
+            })
+            promise.done(function (data) {
+                alert("You have been successfully registered. Log in to continue.");
+                window.location.href = "Index.html";
+            });
+            promise.fail(function (jqXHR, textStatus, errorThrown) {
+                if (jqXHR.status == 400) {
+                    alert(jqXHR.responseJSON["ModelState"][""][0]);
+                    return false;
+                }
+                handleGlobalAjaxError(jqXHR, textStatus, errorThrown);
+            });
+        });
+    </script>
+</body>
+
+</html>

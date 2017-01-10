@@ -1,0 +1,451 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Librarian Admin page</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My account</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            padding-top: 70px;
+            /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+        }
+    </style>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="Scripts/jquery-3.1.1.js"></script>
+    <script src="scripts/jquery-tmpl.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="scripts/jquery-serialization.js"></script>
+    <script>
+        $(function () {
+            $("#loginDialog").dialog({
+                autoOpen: false
+            });
+        });
+    </script>
+
+
+
+
+</head>
+<body>
+    <header>
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="Index.html">
+                        <img src="assets/images/logo.png" alt="logo">
+                    </a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="Index.html">Library home page</a>
+                        </li>
+                        <li>
+                            <a loginLink href="#">login</a>
+                        </li>
+
+                        <li>
+                            <a logoutLink class="hidden" href="#">Log out</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container -->
+        </nav>
+    </header>
+
+
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" width="device-width">
+
+
+
+                <form>
+                    <input id="searchUser" type="search"  class="form-control" placeholder="search username" name="userSearch">
+                </form>
+                <p hidden loader>loading....</p>
+                <div hidden userNotFoundMessage><p>No such user exists</p></div>
+                <div hidden userData>
+                    <a id=clearUserData href="#"> &#215; </a>
+                    <form id="addLoan">
+                        <input id="loanCopyId" type="text" placeholder="copy id">
+                        <button id="addLoanButton" type="button" name="checkout copy">Checkout copy</button>
+                    </form>
+                    <div id=loansContainer></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="panel-footer">
+            <div class="container text-center">
+                <hr>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-md-4">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="#">Home</a></li>
+                                <li><a href="#">FAQ</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="#">Contact</a></li>
+                                <li><a href="#">Opening hours</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="#">About the Library</a></li>
+                                <li><a href="#">Libraries</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-md-6">
+                            <p></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p>© 2016 - Digital Library - Team2</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        function handleGlobalAjaxError(jqXHR, textStatus, errorThrown) {
+            if (jqXHR.status == 500) {
+                alert("Your request could not be fulfilled. Please reload the page and try again. Server error message:   " + textStatus);
+                return false;
+            } else if (jqXHR.status == 401) {
+                alert("Please log in to continue.")
+                return false;
+            } else if (jqXHR.status == 403) {
+                alert("You do not have the required permissions.")
+                return false;
+            } else if (jqXHR.status == 405) {
+                alert("Invalid request. Please reload the page.")
+                return false;
+            } else {
+                alert(jqXHR.status + " " + errorThrown);
+                return false;
+            }
+        }
+        loansUri = "api/loans/";
+        reservationsUri = "api/reservations/";
+        booksUri = "api/books/";
+
+        jQuery.ajaxSetup({
+            beforeSend: function () {
+                $("[loader]").show();
+            },
+            complete: function () {
+                $("[loader]").hide();
+            },
+            success: function () { }
+        });
+
+        applyTokenToHeaders = function () {
+            var token = sessionStorage.getItem("tokenKey");
+            var headers = {};
+            if (token) {
+                headers.Authorization = 'Bearer ' + token;
+            }
+            return headers;
+        };
+
+        getUserName = function () {
+            return sessionStorage.getItem("userName");
+        }
+
+        $(document).ready(function () {
+            if (getUserName()) {
+                $("[loginLink]").addClass("hidden");
+                $("[logoutLink]").removeClass("hidden");
+            }
+        });
+
+        function renderLoan(loan) {
+            loan["DayOfBooking"] = new Date(loan["DayOfBooking"]);
+            loan["ReturnDay"] = new Date(loan["ReturnDay"]);
+            if (loan["ReturnDay"] < new Date()) {
+                loan["IsOverdue"] = true;
+            } else {
+                loan["IsOverdue"] = false;
+            }
+            $("#loanDetails").tmpl(loan).appendTo("#loansContainer");
+        }
+
+        $("#clearUserData").on("click", function (evt) {
+            evt.preventDefault();
+            $("#searchUser").val("");
+            $("#loansContainer").empty();
+            $("[userData]").hide();
+        })
+
+        $("#searchUser").keypress(function (evt) {
+            if (evt.which == 13) {//on pressing enter
+                if (!sessionStorage.getItem("tokenKey")) {
+                    alert("Please log in to continue");
+                    return false;
+                }
+
+                $("[userNotFoundMessage]").hide();
+                $("[userData]").hide();
+
+                user = $("#searchUser").val();
+                refreshLoans(user);
+                return false;
+            }
+        }
+            );
+
+        function refreshLoans(user) {
+            $("#loansContainer").empty();
+
+
+            getUserLoans = $.ajax({
+                type: 'GET',
+                url: loansUri + user,
+                headers: applyTokenToHeaders()
+            }).done(function (loans) {
+                $.each(loans, function (key, loan) {
+                    renderLoan(loan);
+                    $("[userData]").show();
+                    $("[userNotFoundMessage]").hide();
+                });
+                $("#loansContainer").children("[loan]").each(addBookInfoToContainer);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                if (jqXHR.status == 404) {
+                    if (jqXHR.statusText === "User not found") {
+                        $("[userNotFoundMessage]").show();
+                        return false;
+                    } else {
+                        $("[userData]").show();
+                        $("#loansContainer").append($("<p>No loans</p>"));//the controller needs to differentiate if the user was not found or if the user has no loans
+                        return false;
+                    }
+                }
+                handleGlobalAjaxError(jqXHR, textStatus, errorThrown);
+            });
+        }
+
+        function addBookInfoToContainer(index, container) {
+            bookId = $(container).find("[BookId]").text();
+            $.getJSON(booksUri + bookId)
+                   .done(function (book) {
+                       $("#bookDetails").tmpl(book).prependTo($(container));
+                   }).fail(function (jqXHR, textStatus, errorThrown) {
+                       if (jqXHR.status == 404 || 400) {
+                           alert("A problem occured while handling your request. Please reload the page and try again");
+                           return false;
+                       }
+                       handleGlobalAjaxError(jqXHR, textStatus, errorThrown);
+                   });
+        }
+
+        $(document).on("click", "[toggleDetails]", function (evt) {
+            evt.preventDefault();
+            $(evt.target).parent("[actions]").next("[details]").toggle();
+        });
+
+        $("#addLoan").on("click", "#addLoanButton", function (evt) {
+            evt.preventDefault();
+            addLoan();
+            return false;
+        })
+        $("#loanCopyId").keypress(function (evt) {
+            if (evt.which == 13) {
+                addLoan();
+                return false;
+            }     
+        });
+
+        function addLoan(){     
+            user = $("#searchUser").val();
+            copyId = $("#loanCopyId").val();
+            createLoan = $.ajax({
+                type: 'POST',
+                url: loansUri + user + "?copyId=" + copyId,
+                headers: applyTokenToHeaders()
+            }).done(
+            refreshLoans(user))
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            if (jqXHR.status == 400) {
+                alert("The copy is no longer available");//the controller needs to differentiate if the user was not found or if the user has no loans
+                return false;
+            }
+            handleGlobalAjaxError(jqXHR, textStatus, errorThrown);
+        });
+
+        }
+        
+        $("#loansContainer").on("click", "[renewLoan]", function (evt) {
+            evt.preventDefault();
+            copyId = $(evt.target).parents("[actions]").siblings("[copyInfo]").find("[CopyId]").text();
+            user = $("#searchUser").val();
+            getUserName = $.ajax({
+                type: 'POST',
+                url: loansUri + user + "/" + copyId + "/renew",
+                headers: applyTokenToHeaders()
+            }).done(function (returnDay) {
+                returnDay = new Date(returnDay);
+                $(evt.target).parents("[actions]").siblings("[loanInfo]").find("[returnDay]").text(returnDay);
+                alert("The loan has been successfully renewed");
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                handleGlobalAjaxError(jqXHR, textStatus, errorThrown);
+            });
+        })
+
+        $("#loansContainer").on("click", "[returnCopy]", function (evt) {
+            evt.preventDefault();
+            copyId = $(evt.target).parents("[actions]").siblings("[copyInfo]").find("[CopyId]").text();
+            user = $("#searchUser").val();
+            getUserName = $.ajax({
+                type: 'DELETE',
+                url: loansUri + user + "/" + copyId,
+                headers: applyTokenToHeaders()
+            }).done(function () {
+                $(evt.target).parents("[loan]").remove();
+                alert("The book has been successfully returned");
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                handleGlobalAjaxError(jqXHR, textStatus, errorThrown);
+            });
+        })
+
+        $(document).on("click", "[type=login]", function (evt) {
+            evt.preventDefault();
+
+            sessionStorage.removeItem("tokenKey");
+            sessionStorage.removeItem("userName");
+            $("[loginLink]").removeClass("hidden");
+            $("[logoutLink]").addClass("hidden");
+
+            formData = $("#login").toObject();
+            formData.grant_type = "password";
+            promise = $.ajax({
+                type: "POST",
+                url: "token",
+                contentType: "application/x-www-form-urlencoded",
+                data: formData
+            });
+            promise.done(function (data) {
+                // Cache the access token in session storage.
+                sessionStorage.setItem("tokenKey", data["access_token"]);
+                sessionStorage.setItem("userName", formData["username"]);
+                $("[loginLink]").addClass("hidden");
+                $("[logoutLink]").removeClass("hidden");
+                $("#loginDialog").dialog("close");
+            });
+            promise.fail(function (jqXHR, textStatus, errorThrown) {
+                if (jqXHR.status == 400) {
+                    alert("Incorrect username or password");
+                    return false;
+                }
+                handleGlobalAjaxError(jqXHR, textStatus, errorThrown);
+            });
+        });
+
+
+        $("[loginLink]").on("click", function (evt) {
+            evt.preventDefault();
+            $("#loginDialog").dialog("open");
+        });
+
+        $(document).on("click", "[logoutLink]", function (evt) {
+            evt.preventDefault();
+            sessionStorage.removeItem("tokenKey");
+            sessionStorage.removeItem("userName");
+            $("[loginLink]").removeClass("hidden");
+            $("[logoutLink]").addClass("hidden");
+            alert("You have been successfully logged out.");
+            window.location.href = "Librarian.html";
+        });
+    </script>
+    <script id="loanDetails" type="text/x-jQuery-tmpl">
+        <div loan>
+            <div copyInfo>
+                <h3 hidden CopyId>${CopyId}</h3>
+                <h3 hidden BookId>${BookId}</h3>
+                <h3>${Location}</h3>
+                <h4>${LocationInLibrary}</h4>
+            </div>
+            <div loanInfo>
+                <h4>${DayOfBooking}</h4>
+                <h4 returnDay>${ReturnDay}</h4>
+            </div>
+            <div actions>
+                {{if IsOverdue==false}}
+                <a renewLoan href="#">Renew loan</a>
+                {{else}}
+                <span> Overdue</span>
+                {{/if}}
+                <a returnCopy href="#">Return copy</a>
+            </div>
+        </div>
+    </script>
+
+    <script id="bookDetails" type="text/x-jQuery-tmpl">
+        <div book>
+            <div basicInfo>
+                <h3 hidden ID>${BookId}</h3>
+                <h3 title><span class="label label-default">Title</span> ${Title}</h3>
+                <h4 author><span class="label label-default">AuthorName</span>${AuthorName}</h4>
+            </div>
+            <div actions>
+                <a toggleDetails href="#" class="btn btn-primary">Details</a>
+                <a toggleAvailability hidden href="#">Availability</a>
+            </div>
+            <div hidden details>
+                <h4 publicationYear><span class="label label-default">PublishYear</span> ${PublishYear}</h4>
+                <h4><span class="label label-default">SubTitle</span> ${SubTitle}</h4>
+                <h4><span class="label label-default">OriginTitle</span>${OriginTitle}</h4>
+                <h4><span class="label label-default">Description</span> ${Description}</h4>
+                <h4><span class="label label-default">Pages</span> ${Pages}</h4>
+               
+                <h4> <span class="label label-default">PublisherName</span> ${PublisherName}</h4>
+                <h4 publicationYear><span class="label label-default">ISBN</span> ${ISBN}</h4>
+            </div>
+        </div>
+    </script>
+
+    <div id="loginDialog">
+        <form id="login">
+            <input type="username" name="username" placeholder="username" />
+            <input type="password" name="password" placeholder="password" />
+            <button type="login">login</button>
+        </form>
+    </div>
+</body>
+</html>

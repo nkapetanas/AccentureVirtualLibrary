@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="46f58d2b808e46bc9ee763f3863ff756" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="EntityDBModel.C__MigrationHistory" Width="1.5" PointX="7.75" PointY="3.625" />
+        <EntityTypeShape EntityType="EntityDBModel.AspNetRole" Width="1.5" PointX="0.75" PointY="9" />
+        <EntityTypeShape EntityType="EntityDBModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="14.125" />
+        <EntityTypeShape EntityType="EntityDBModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="11.5" />
+        <EntityTypeShape EntityType="EntityDBModel.AspNetUser" Width="1.5" PointX="3" PointY="7.5" />
+        <EntityTypeShape EntityType="EntityDBModel.Author" Width="1.5" PointX="3" PointY="17.375" />
+        <EntityTypeShape EntityType="EntityDBModel.Book" Width="1.5" PointX="3" PointY="2.75" />
+        <EntityTypeShape EntityType="EntityDBModel.BookAuthor" Width="1.5" PointX="5.25" PointY="0.75" />
+        <EntityTypeShape EntityType="EntityDBModel.BookCategory" Width="1.5" PointX="5.25" PointY="3.75" />
+        <EntityTypeShape EntityType="EntityDBModel.Category" Width="1.5" PointX="3" PointY="21" />
+        <EntityTypeShape EntityType="EntityDBModel.Copy" Width="1.5" PointX="5.25" PointY="7.125" />
+        <EntityTypeShape EntityType="EntityDBModel.History" Width="1.5" PointX="10.5" PointY="8.375" />
+        <EntityTypeShape EntityType="EntityDBModel.Publisher" Width="1.5" PointX="0.75" PointY="5.25" />
+        <EntityTypeShape EntityType="EntityDBModel.Reservation" Width="1.5" PointX="7.5" PointY="8.25" />
+        <EntityTypeShape EntityType="EntityDBModel.sysdiagram" Width="1.5" PointX="7.75" PointY="11.625" />
+        <AssociationConnector Association="EntityDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="EntityDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="EntityDBModel.FK_Copies_dbo_AspNetUsers_Id" />
+        <AssociationConnector Association="EntityDBModel.FK_History__dbo_AspNetUsers_Id" />
+        <AssociationConnector Association="EntityDBModel.FK_Reservations_dbo_AspNetUsers_Id" />
+        <AssociationConnector Association="EntityDBModel.FK_BookAuthor_Author" />
+        <AssociationConnector Association="EntityDBModel.FK_Book_Publisher" />
+        <AssociationConnector Association="EntityDBModel.FK_BookAuthors_Book" />
+        <AssociationConnector Association="EntityDBModel.FK_BookCategory_Book" />
+        <AssociationConnector Association="EntityDBModel.FK_Copies_Book" />
+        <AssociationConnector Association="EntityDBModel.FK_BookCategory_Category" />
+        <AssociationConnector Association="EntityDBModel.FK_History_Copy" />
+        <AssociationConnector Association="EntityDBModel.FK_Reservations_Copy" />
+        <AssociationConnector Association="EntityDBModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="EntityDBModel.Rating" Width="1.5" PointX="5.25" PointY="17.75" />
+        <AssociationConnector Association="EntityDBModel.FK_Ratings_Book" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
